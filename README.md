@@ -1,99 +1,152 @@
 
-# Next Blog Starter
+# Next Blog Server
 
-A simple **Blog Application Starter Pack** built with **TypeScript, Express.js**.  
-This project is designed for the **Next Level Web Development Bootcamp** to help learners practice Prisma hands-on by building a blog platform.
+A modular REST API backend for a blog platform, built with TypeScript, Express, and Prisma.
 
----
+## Overview
 
-## Features
-- TypeScript + Express.js setup
-- Modular project structure
-- Environment configuration with `dotenv`
-- Ready to extend with blog modules (Posts, Users, etc.)
+This project provides a clean server-side foundation for blog applications with:
 
----
+- User management APIs (create, read, update, delete)
+- Post creation API with user relation
+- Prisma ORM integration
+- Type-safe TypeScript codebase
+- Ready-to-import Postman collection
 
-## Installation
+## Tech Stack
 
-Clone the repository:
+- Node.js
+- TypeScript
+- Express.js
+- Prisma ORM
+- PostgreSQL (via Prisma datasource)
+- ts-node-dev
+
+## Project Structure
+
+```text
+next-blog-server/
+|- prisma/
+|  |- schema.prisma
+|  |- migrations/
+|- src/
+|  |- app.ts
+|  |- server.ts
+|  |- config/
+|  |  |- db.ts
+|  |- modules/
+|     |- user/
+|     |  |- user.contoller.ts
+|     |  |- user.routes.ts
+|     |  |- user.service.ts
+|     |- post/
+|        |- post.controller.ts
+|        |- post.router.ts
+|        |- post.service.ts
+|- next-blog-server.postman_collection.json
+|- package.json
+|- tsconfig.json
+```
+
+## Environment Variables
+
+Create a `.env` file in the project root and set the following values:
+
+```env
+PORT=3000
+NODE_ENV=development
+DATABASE_URL=postgresql://USER:PASSWORD@HOST:PORT/DATABASE
+```
+
+## Getting Started
+
+1. Install dependencies:
 
 ```bash
-
-
-Install dependencies:
-
-```bash
-# using npm
 npm install
-
-# using yarn
-yarn install
-
-# using pnpm
-pnpm install
 ```
 
-Setup environment variables:
+2. Generate Prisma client:
 
 ```bash
-cp .env.example .env
+npx prisma generate
 ```
 
-Run the development server:
+3. Run migrations:
 
 ```bash
-# using npm
+npx prisma migrate dev
+```
+
+4. Start development server:
+
+```bash
+npm run dev
+```
+
+Server default URL:
+
+```text
+http://localhost:3000
+```
+
+## Available Scripts
+
+```bash
+# Development
 npm run dev
 
-# using yarn
-yarn dev
+# TypeScript build
+npm run build
 
-# using pnpm
-pnpm dev
+# Production start
+npm run start
 ```
 
----
+## API Endpoints
 
-## Folder Structure
+Base URL: `/api/v1`
 
-```
-Prisma-Blog/
-│── node_modules/          # Dependencies
-│── src/
-│   ├── app.ts             # Express app configuration
-│   ├── server.ts          # Server entry point
-│   ├── config/            # Environment & configuration files
-│   └── modules/           # Application modules (posts, users, etc.)
-│── package.json           # Project metadata & scripts
-│── pnpm-lock.yaml         # Lockfile (pnpm)
-│── tsconfig.json          # TypeScript configuration
-│── README.md              # Documentation
-```
+### User
 
----
+- `POST /user` - Create user
+- `GET /user` - Get all users
+- `GET /user/:id` - Get user by id
+- `PATCH /user/:id` - Update user
+- `DELETE /user/:id` - Delete user
 
-## Scripts
+### Post
+
+- `POST /post` - Create post
+
+### Health Check
+
+- `GET /` - Returns `API is running`
+
+## Postman Collection
+
+Use the ready collection file:
+
+- `next-blog-server.postman_collection.json`
+
+Import this file in Postman and set `baseUrl` as needed.
+
+## Common Troubleshooting
+
+### Error: `Cannot find module '.prisma/client/default'`
+
+Run:
 
 ```bash
-# Run in development mode
-pnpm dev
-
-# Build for production
-pnpm build
-
-# Run production build
-pnpm start
+npx prisma generate
 ```
 
----
+If the problem persists, ensure:
 
-## Learning Objective
+- `DATABASE_URL` is present in `.env`
+- Prisma packages are installed correctly
+- Your Prisma schema configuration matches the installed Prisma version
 
-This starter pack is part of the **Next Level Web Development Bootcamp** curriculum.
-By using this project, students will learn how to:
+## Author
 
-* Connect a Node.js app with Prisma ORM
-* Build modular APIs
-* Manage environment variables
-* Structure scalable backend projects
+Next Level Web Development
